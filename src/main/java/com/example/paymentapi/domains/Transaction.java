@@ -1,7 +1,7 @@
 package com.example.paymentapi.domains;
 
 import com.example.paymentapi.enums.TransactionStatus;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,12 @@
 package com.example.paymentapi.domains;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * @author "Otajonov Dilshodbek

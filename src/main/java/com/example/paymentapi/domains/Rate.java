@@ -1,8 +1,10 @@
 package com.example.paymentapi.domains;
 
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 /**
  * @author "Otajonov Dilshodbek

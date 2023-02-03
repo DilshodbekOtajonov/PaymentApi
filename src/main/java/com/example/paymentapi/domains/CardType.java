@@ -1,6 +1,7 @@
 package com.example.paymentapi.domains;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 
 /**
  * @author "Otajonov Dilshodbek
