@@ -8,6 +8,5 @@ import org.springframework.stereotype.Service;
  * PaymentApi/IntelliJ IDEA
  */
 @Service
-
-public class TransactionServiceImpl {
+public class TransactionServiceImpl implements TransactionService {
 }

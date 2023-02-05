@@ -5,5 +5,5 @@ package com.example.paymentapi.dto.auth;
  * @since 2/3/23 10:08 PM (Friday)
  * PaymentApi/IntelliJ IDEA
  */
-public record AuthLoginDTO() {
+public record AuthLoginDTO(String phone, String password) {
 }

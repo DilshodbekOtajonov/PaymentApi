@@ -5,5 +5,5 @@ package com.example.paymentapi.dto.token;
  * @since 2/4/23 12:26 AM (Saturday)
  * PaymentApi/IntelliJ IDEA
  */
-public record JwtTokenResponse() {
+public record JwtTokenResponse(String accessToken,String type) {
 }

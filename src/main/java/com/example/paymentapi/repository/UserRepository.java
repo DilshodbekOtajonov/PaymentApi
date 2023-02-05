@@ -4,6 +4,8 @@ import com.example.paymentapi.domains.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * @author "Otajonov Dilshodbek
  * @since 2/3/23 8:55 PM (Friday)
@@ -13,4 +15,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
+
+    Optional<User> findUserByPhone(String phone);
 }

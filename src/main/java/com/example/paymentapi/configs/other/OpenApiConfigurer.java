@@ -1,4 +1,4 @@
-package com.example.paymentapi.configs;
+package com.example.paymentapi.configs.other;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

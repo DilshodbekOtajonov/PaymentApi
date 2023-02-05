@@ -26,9 +26,9 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity login(@RequestBody AuthLoginDTO dto) {
+    public ResponseEntity<JwtTokenResponse> login(@RequestBody AuthLoginDTO dto) {
         JwtTokenResponse response = userService.login(dto);
-        return null;
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping(value = "/register")
