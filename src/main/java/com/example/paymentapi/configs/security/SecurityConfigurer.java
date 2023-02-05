@@ -37,6 +37,7 @@ public class SecurityConfigurer {
         http.authorizeHttpRequests()
                 .antMatchers("/auth/login",
                         "/auth/register",
+                        "/auth/delete",
                         "/swagger-ui/**",
                         "/api-docs/**")
                 .permitAll()

@@ -1,6 +1,7 @@
 package com.example.paymentapi.service.user;
 
 import com.example.paymentapi.domains.User;
+import com.example.paymentapi.dto.auth.AuthDeleteDTO;
 import com.example.paymentapi.dto.auth.AuthLoginDTO;
 import com.example.paymentapi.dto.auth.AuthUserDTO;
 import com.example.paymentapi.dto.auth.AuthRegisterDTO;
@@ -57,14 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public JwtTokenResponse login(AuthLoginDTO dto) {
-        Authentication authenticate;
-        try {
-            authenticate = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(dto.phone(),
-                            dto.password()));
-        } catch (AuthenticationException e) {
-            throw new RuntimeException("invalid credentials");
-        }
+        Authentication authenticate = authenticateUser(dto.phone(), dto.password());
         com.example.paymentapi.configs.security.UserDetails userDetails = (com.example.paymentapi.configs.security.UserDetails) authenticate.getPrincipal();
         String accessToken = JwtUtils.accessTokenService.generateToken(userDetails);
         return new JwtTokenResponse(accessToken, "Bearer");
@@ -75,5 +69,26 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findUserByPhone(phone)
                 .orElseThrow(() -> new RuntimeException("user not found by phone " + phone));
         return new com.example.paymentapi.configs.security.UserDetails(user);
+    }
+
+    @Override
+    public void delete(AuthDeleteDTO dto) {
+        Authentication authenticate = authenticateUser(dto.phone(), dto.password());
+        com.example.paymentapi.configs.security.UserDetails userDetails = (com.example.paymentapi.configs.security.UserDetails) authenticate.getPrincipal();
+        User currentUser = userDetails.authUser();
+        currentUser.setStatus(UserStatus.DELETED);
+        userRepository.save(currentUser);
+    }
+
+    private Authentication authenticateUser(String phone, String password) {
+        Authentication authenticate;
+        try {
+            authenticate = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(phone,
+                            password));
+        } catch (AuthenticationException e) {
+            throw new RuntimeException("invalid credentials");
+        }
+        return authenticate;
     }
 }

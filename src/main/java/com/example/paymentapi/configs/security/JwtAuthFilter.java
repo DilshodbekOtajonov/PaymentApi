@@ -34,6 +34,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final static List<String> WHITE_LIST = List.of(
             "/auth/login",
             "/auth/register",
+            "/auth/delete",
             "/swagger-ui",
             "/api-docs"
     );

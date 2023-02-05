@@ -1,5 +1,6 @@
 package com.example.paymentapi.service.user;
 
+import com.example.paymentapi.dto.auth.AuthDeleteDTO;
 import com.example.paymentapi.dto.auth.AuthLoginDTO;
 import com.example.paymentapi.dto.auth.AuthUserDTO;
 import com.example.paymentapi.dto.auth.AuthRegisterDTO;
@@ -15,4 +16,6 @@ public interface UserService extends UserDetailsService {
     AuthUserDTO register(AuthRegisterDTO dto);
 
     JwtTokenResponse login(AuthLoginDTO dto);
+
+    void delete(AuthDeleteDTO dto);
 }
