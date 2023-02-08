@@ -2,6 +2,7 @@ package com.example.paymentapi.domains;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
 public class Rate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

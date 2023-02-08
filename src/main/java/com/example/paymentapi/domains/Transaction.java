@@ -1,7 +1,9 @@
 package com.example.paymentapi.domains;
 
 import com.example.paymentapi.enums.TransactionStatus;
+
 import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,10 +28,10 @@ public class Transaction {
     @GeneratedValue(generator = "transaction_uuid_generator")
     @GenericGenerator(name = "transaction_uuid_generator", strategy = "uuid2")
     private String id;
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Card.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Card.class, cascade = CascadeType.MERGE)
     @JoinColumn(name = "sender_card_id", nullable = false)
     private Card sender;
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Card.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Card.class, cascade = CascadeType.MERGE)
     @JoinColumn(name = "receiver_card_id", nullable = false)
     private Card receiver;
     @Column(nullable = false, name = "sending_amount")
@@ -38,7 +40,7 @@ public class Transaction {
     private Long receivingAmount;
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
-
+    @Column(nullable = false)
     private Long time;
 
 }

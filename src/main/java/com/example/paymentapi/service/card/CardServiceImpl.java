@@ -88,6 +88,13 @@ public class CardServiceImpl implements CardService {
         }
     }
 
+    @Override
+    public Card get(Long id) {
+        Card card = cardRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Card not found by id: " + id));
+        return card;
+    }
+
 
     private CardType getCardType(Long id) {
         CardType cardType = cardTypeRepository.findById(id)

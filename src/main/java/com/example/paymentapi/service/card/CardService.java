@@ -1,5 +1,6 @@
 package com.example.paymentapi.service.card;
 
+import com.example.paymentapi.domains.Card;
 import com.example.paymentapi.dto.card.CardCreateDTO;
 import com.example.paymentapi.dto.card.CardDTO;
 
@@ -16,4 +17,7 @@ public interface CardService {
     CardDTO getCardInfo(String cardNumber);
 
     List<CardDTO> getUserCards(String userId);
+
+    Card get(Long Id);
+
 }
