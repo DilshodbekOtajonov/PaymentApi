@@ -10,7 +10,7 @@ import com.example.paymentapi.dto.transaction.TransactionDTO;
  */
 
 public interface TransactionService {
-    String create(TransactionCreateDTO dto);
+    String create(TransactionCreateDTO dto) throws IllegalAccessException;
 
-    TransactionDTO confirm(String id);
+    TransactionDTO confirm(String id) throws IllegalAccessException;
 }

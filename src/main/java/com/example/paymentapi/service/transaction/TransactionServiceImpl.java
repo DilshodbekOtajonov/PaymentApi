@@ -32,7 +32,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final CardService cardService;
 
     @Override
-    public String create(TransactionCreateDTO dto) {
+    public String create(TransactionCreateDTO dto) throws IllegalAccessException {
         Card senderCard = cardService.get(dto.senderId());
         Card receiverCard = cardService.get(dto.receiverId());
 
@@ -78,7 +78,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Transactional
     @Override
-    public TransactionDTO confirm(String id) {
+    public TransactionDTO confirm(String id) throws IllegalAccessException {
         synchronized (cardService) {
             Transaction transaction = transactionRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("transaction not found by id: " + id));
@@ -124,11 +124,11 @@ public class TransactionServiceImpl implements TransactionService {
             throw new RuntimeException("Insufficient balance on card id: " + card.getId());
     }
 
-    private void checkUser(String userId) {
+    private void checkUser(String userId) throws IllegalAccessException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         if (!userDetails.authUser().getId().equals(userId))
-            throw new RuntimeException("Access denied");
+            throw new IllegalAccessException("Access denied");
     }
 
 }
