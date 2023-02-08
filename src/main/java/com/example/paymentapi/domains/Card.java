@@ -22,7 +22,7 @@ public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long balance;
+    private volatile Long balance;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false, unique = true, length = 16)
@@ -30,9 +30,9 @@ public class Card {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = CardType.class)
     @JoinColumn(name = "card_type_id", nullable = false)
     private CardType type;
-    private String currency;
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
 
 }

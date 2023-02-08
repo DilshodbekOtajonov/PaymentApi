@@ -66,8 +66,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String prefix = "Bearer ";
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(prefix)) {
             return headerAuth.substring(prefix.length());
+        } else {
+            throw new RuntimeException("Authorization error : token needed");
         }
-        return null;
+
     }
 
     private final static Function<String, Boolean> isOpenUrl = (url) -> WHITE_LIST.stream().anyMatch(url::startsWith);

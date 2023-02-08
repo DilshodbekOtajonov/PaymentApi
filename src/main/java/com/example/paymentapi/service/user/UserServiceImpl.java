@@ -68,7 +68,11 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
         User user = userRepository.findUserByPhone(phone)
                 .orElseThrow(() -> new RuntimeException("user not found by phone " + phone));
+//        boolean isUserActive = user.getStatus().equals(UserStatus.ACTIVE);
+//        if (isUserActive)
         return new com.example.paymentapi.configs.security.UserDetails(user);
+//        else
+//            throw new RuntimeException("user not found");
     }
 
     @Override
@@ -90,5 +94,12 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("invalid credentials");
         }
         return authenticate;
+    }
+
+    @Override
+    public User getUser(String id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found by id: " + id));
+        return user;
     }
 }

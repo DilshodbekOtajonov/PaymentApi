@@ -1,6 +1,9 @@
 package com.example.paymentapi.domains;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 /**
@@ -10,6 +13,8 @@ import javax.persistence.*;
  */
 
 @Entity
+@Getter
+@Setter
 public class CardType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,5 +23,7 @@ public class CardType {
     private String name;
     @Column(nullable = false, unique = true, length = 4)
     private String prefix;
+    @Column(nullable = false, unique = true, length = 10)
+    private String currency;
 
 }
