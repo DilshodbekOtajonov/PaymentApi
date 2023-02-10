@@ -1,5 +1,6 @@
 package com.example.paymentapi.service.card;
 
+import com.example.paymentapi.configs.exceptions.ValidationException;
 import com.example.paymentapi.domains.Card;
 import com.example.paymentapi.domains.CardType;
 import com.example.paymentapi.domains.User;
@@ -29,15 +30,34 @@ public class CardServiceImpl implements CardService {
     private final UserService userService;
 
     @Override
-    public CardDTO addCard(CardCreateDTO dto) {
+    public CardDTO addCard(CardCreateDTO dto) throws IllegalAccessException {
+
+        String userId = dto.userId();
+
+//        checking user
+        userService.checkUser(userId);
+
+        Long balance = dto.balance();
+//        checking balance
+        if (balance < 0)
+            throw new ValidationException("balance can not be negative");
+
         CardType cardType = getCardType(dto.cardTypeId());
-        User user = userService.getUser(dto.userId());
+
+        String cardNumber = dto.cardNumber();
+
+//        checking card type and card number matching
+        if (!cardNumber.startsWith(cardType.getPrefix())) {
+            throw new ValidationException("card number and card type does not match");
+        }
+
+        User user = userService.getUser(userId);
         Card card = new Card();
-        card.setCardNumber(dto.cardNumber());
+        card.setCardNumber(cardNumber);
         card.setUser(user);
         card.setType(cardType);
         card.setName(dto.name());
-        card.setBalance(dto.balance());
+        card.setBalance(balance);
         Card savedCard = cardRepository.save(card);
         return CardDTO.builder()
                 .id(savedCard.getId())

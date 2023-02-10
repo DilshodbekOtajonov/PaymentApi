@@ -14,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -101,5 +102,12 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found by id: " + id));
         return user;
+    }
+
+    public void checkUser(String userId) throws IllegalAccessException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        com.example.paymentapi.configs.security.UserDetails userDetails = (com.example.paymentapi.configs.security.UserDetails) authentication.getPrincipal();
+        if (!userDetails.authUser().getId().equals(userId))
+            throw new IllegalAccessException("Access denied");
     }
 }

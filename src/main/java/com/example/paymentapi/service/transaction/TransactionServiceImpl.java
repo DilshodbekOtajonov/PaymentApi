@@ -31,6 +31,8 @@ public class TransactionServiceImpl implements TransactionService {
     private final RateRepository rateRepository;
     private final CardService cardService;
 
+    private final UserService userService;
+
     @Override
     public String create(TransactionCreateDTO dto) throws IllegalAccessException {
         Card senderCard = cardService.get(dto.senderId());
@@ -38,7 +40,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 // checking whether sender and currently active user is same
         String senderId = senderCard.getUser().getId();
-        checkUser(senderId);
+        userService.checkUser(senderId);
 
         Long sendingAmount = dto.amount();
         Long receivingAmount;
@@ -79,6 +81,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional
     @Override
     public TransactionDTO confirm(String id) throws IllegalAccessException {
+
         synchronized (cardService) {
             Transaction transaction = transactionRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("transaction not found by id: " + id));
@@ -90,7 +93,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 //        checking balance of sender card against sending amount
             String senderId = senderCard.getUser().getId();
-            checkUser(senderId);
+            userService.checkUser(senderId);
 
             try {
                 Long sendingAmount = transaction.getSendingAmount();
@@ -124,11 +127,6 @@ public class TransactionServiceImpl implements TransactionService {
             throw new RuntimeException("Insufficient balance on card id: " + card.getId());
     }
 
-    private void checkUser(String userId) throws IllegalAccessException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        if (!userDetails.authUser().getId().equals(userId))
-            throw new IllegalAccessException("Access denied");
-    }
+
 
 }

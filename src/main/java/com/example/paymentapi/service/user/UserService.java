@@ -22,4 +22,6 @@ public interface UserService extends UserDetailsService {
 
     User getUser(String id);
 
+    void checkUser(String userId) throws IllegalAccessException;
+
 }

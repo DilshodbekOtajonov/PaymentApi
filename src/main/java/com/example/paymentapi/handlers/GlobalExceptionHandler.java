@@ -1,5 +1,6 @@
 package com.example.paymentapi.handlers;
 
+import com.example.paymentapi.configs.exceptions.ValidationException;
 import com.example.paymentapi.handlers.errorResponse.ApiErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,15 +29,15 @@ public class GlobalExceptionHandler {
 //                HttpStatus.NOT_FOUND);
 //    }
 
-//    @ExceptionHandler(ValidationException.class)
-//    public ResponseEntity<ApiErrorResponse> handle400(ValidationException e, HttpServletRequest request) {
-//        return new ResponseEntity<>(ApiErrorResponse.builder()
-//                .friendlyMessage(e.getMessage())
-//                .developerMessage(Arrays.toString(e.getStackTrace()))
-//                .requestPath(request.getRequestURL().toString())
-//                .build(),
-//                HttpStatus.BAD_REQUEST);
-//    }
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<ApiErrorResponse> handle400(ValidationException e, HttpServletRequest request) {
+        return new ResponseEntity<>(ApiErrorResponse.builder()
+                .friendlyMessage(e.getMessage())
+                .developerMessage(Arrays.toString(e.getStackTrace()))
+                .requestPath(request.getRequestURL().toString())
+                .build(),
+                HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(IllegalAccessException.class)
     public ResponseEntity<ApiErrorResponse> handle403(IllegalAccessException e, HttpServletRequest request) {

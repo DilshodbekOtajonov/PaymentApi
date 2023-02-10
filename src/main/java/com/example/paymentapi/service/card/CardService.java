@@ -12,7 +12,7 @@ import java.util.List;
  * PaymentApi/IntelliJ IDEA
  */
 public interface CardService {
-    CardDTO addCard(CardCreateDTO dto);
+    CardDTO addCard(CardCreateDTO dto) throws IllegalAccessException;
 
     CardDTO getCardInfo(String cardNumber);
 
